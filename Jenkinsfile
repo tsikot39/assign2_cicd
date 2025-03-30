@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        NETLIFY_SITE_ID = credentials('NETLIFY_SITE_ID')
+        NETLIFY_AUTH_TOKEN = credentials('NETLIFY_AUTH_TOKEN')
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -17,9 +22,12 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying to Netlify...'
-                sh 'npm install netlify-cli # Local install'
-                sh 'npx netlify deploy --prod --site=$ee7c4e09-4b9c-41de-a388-aa13f482734d --auth=$nfp_fEVrjR4WA2TZckKKCV8fgYRXT9NWQTLWb8c0'
+                script {
+                    sh '''
+                        npm install netlify-cli
+                        npx netlify deploy --prod --site=$NETLIFY_SITE_ID --auth=$NETLIFY_AUTH_TOKEN
+                    '''
+                }
             }
         }
     }
