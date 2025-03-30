@@ -18,9 +18,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying to Netlify...'
-                sh 'npm install -g netlify-cli'
-                sh 'netlify deploy --prod --site $ee7c4e09-4b9c-41de-a388-aa13f482734d --auth $nfp_fEVrjR4WA2TZckKKCV8fgYRXT9NWQTLWb8c0'
-    }
-}
+                sh 'npm install netlify-cli # Local install'
+                sh 'npx netlify deploy --prod --site=$ee7c4e09-4b9c-41de-a388-aa13f482734d --auth=$nfp_fEVrjR4WA2TZckKKCV8fgYRXT9NWQTLWb8c0'
+            }
+        }
     }
 }
